@@ -1,0 +1,30 @@
+/* 
+- https://www.blocknotejs.org/docs/styling-theming/themes
+*/
+
+.bn-container[data-color-scheme] {
+  --bn-colors-editor-text: hsl(var(--foreground));
+  --bn-colors-editor-background: hsl(var(--background));
+  --bn-colors-menu-text: hsl(var(--popover-foreground));
+  --bn-colors-menu-background: hsl(var(--popover));
+  --bn-colors-tooltip-text: hsl(var(--foreground));
+  --bn-colors-tooltip-background: hsl(var(--background));
+  --bn-colors-hovered-text: hsl(var(--accent-foreground));
+  --bn-colors-hovered-background: hsl(var(--accent));
+  --bn-colors-selected-text: hsl(var(--foreground));
+  --bn-colors-selected-background: hsl(var(--accent));
+  --bn-colors-disabled-text: hsl(var(--muted-foreground));
+  --bn-colors-disabled-background: hsl(var(--muted));
+  --bn-colors-shadow: rgba(0, 0, 0, 0.04);
+  --bn-colors-border: hsl(var(--border));
+  --bn-colors-side-menu: hsl(var(--muted-foreground));
+  --bn-border-radius: var(--radius);
+}
+
+/* customize the font of the editor */
+.bn-container[data-changing-font-demo] .bn-editor * {
+  font-family: "-apple-system", "BlinkMacSystemFont", "Helvetica Neue",
+    "Segoe UI", "Arial", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC",
+    "Noto Sans SC", "WenQuanYi Micro Hei", "sans-serif", "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
