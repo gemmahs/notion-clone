@@ -101,7 +101,7 @@ function Toolbar({ document }: { document: Doc<"documents"> }) {
             onChange={handleChange}
             onKeyDown={handlePressEnter}
             placeholder="Untitled"
-            className="mb-[27px] w-full resize-none text-5xl font-semibold placeholder:text-muted focus-visible:outline-0"
+            className="mb-[27px] max-w-full resize-none overflow-y-hidden text-5xl font-semibold placeholder:text-muted focus-visible:outline-0"
           />
         ) : (
           <div

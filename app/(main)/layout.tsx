@@ -6,7 +6,6 @@ import { Spinner } from "@/components/ui/spinner";
 import {
   SidebarInset,
   SidebarProvider,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { NavigationSidebar } from "./_components/NavigationSidebar";
 import { Button } from "@/components/ui/button";
@@ -35,10 +34,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
         <SidebarProvider>
           <NavigationSidebar />
 
-          <SidebarInset>
-            <SidebarTrigger className="absolute left-2 top-2 z-10" />
-            {children}
-          </SidebarInset>
+          <SidebarInset>{children}</SidebarInset>
         </SidebarProvider>
       </Authenticated>
     </div>

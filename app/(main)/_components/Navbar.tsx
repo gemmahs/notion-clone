@@ -32,7 +32,7 @@ function Navbar({ document }: { document: Doc<"documents"> }) {
   }
 
   return (
-    <div className="flex items-center p-2 pl-9">
+    <div className="flex flex-1 items-center p-2">
       <Title document={document} />
       <div className="ml-auto flex gap-x-2">
         <PublishPopover document={document} />
@@ -43,7 +43,7 @@ function Navbar({ document }: { document: Doc<"documents"> }) {
               <MoreHorizontal size={16} />
             </div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
+          <DropdownMenuContent className="z-[1600] w-auto">
             <DropdownMenuGroup>
               <DropdownMenuItem
                 className="cursor-pointer"
@@ -53,12 +53,12 @@ function Navbar({ document }: { document: Doc<"documents"> }) {
                 Delete
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
+            {/* <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <div className="px-1 text-sm text-muted-foreground">
                 {`Last edited by ${user?.fullName}`}
               </div>
-            </DropdownMenuGroup>
+            </DropdownMenuGroup> */}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

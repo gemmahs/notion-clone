@@ -167,7 +167,7 @@ function DocumentTree({
               <DropdownMenuContent
                 side="right"
                 align="start"
-                className="z-[9999]"
+                className="z-[3000]"
               >
                 <DropdownMenuItem onClick={onArchive}>
                   <span className="w-4">
@@ -176,10 +176,10 @@ function DocumentTree({
                   <span>Delete</span>
                 </DropdownMenuItem>
 
-                <DropdownMenuSeparator />
+                {/* <DropdownMenuSeparator />
                 <DropdownMenuLabel className="font-medium text-muted-foreground">
                   Last edited by {user?.fullName}
-                </DropdownMenuLabel>
+                </DropdownMenuLabel> */}
               </DropdownMenuContent>
             </DropdownMenu>
 

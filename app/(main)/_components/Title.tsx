@@ -55,11 +55,11 @@ function Title({ document }: { document: Doc<"documents"> }) {
           onChange={handleChange}
           onBlur={disableInput}
           onKeyDown={handlePressEnter}
-          className="h-7 w-56 px-1 focus-visible:ring-transparent"
+          className="h-7 w-52 px-1 focus-visible:ring-transparent"
         />
       ) : (
         <div
-          className="flex h-7 max-w-56 cursor-pointer items-center overflow-hidden whitespace-nowrap rounded-sm px-1 text-[14px] transition-colors hover:bg-accent hover:text-accent-foreground"
+          className="flex h-7 max-w-52 cursor-pointer items-center overflow-hidden whitespace-nowrap rounded-sm px-1 text-[14px] transition-colors hover:bg-accent hover:text-accent-foreground"
           onClick={enableInput}
         >
           <span className="truncate">{document.title}</span>

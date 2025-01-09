@@ -12,7 +12,7 @@ export default function PreviewError({ error }: { error: ConvexError<any> }) {
 
       <p className="text-lg">Something went wrong...</p>
       <p>{error?.data}</p>
-      <Link href="/">
+      <Link href="/documents">
         <Button>Back to document list page</Button>
       </Link>
     </div>

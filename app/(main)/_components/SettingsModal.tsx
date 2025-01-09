@@ -21,7 +21,7 @@ function SettingsModal() {
           <span>Settings</span>
         </SidebarMenuButton>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="z-[3000] sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>My Settings</DialogTitle>
         </DialogHeader>

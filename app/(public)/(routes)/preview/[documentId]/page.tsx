@@ -26,7 +26,13 @@ export default function PreviewPage() {
     );
   }
 
-  if (!document) return <span>Not found</span>;
+  if (!document)
+    return (
+      <div className="flex h-screen w-full flex-col items-center justify-center gap-y-3 p-4">
+        <img src="/404.svg" alt="404" className="max-w-40" />
+        <p className="text-lg">Page not found</p>
+      </div>
+    );
 
   return (
     <>

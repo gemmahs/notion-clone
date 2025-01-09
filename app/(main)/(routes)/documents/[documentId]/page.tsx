@@ -13,8 +13,11 @@ import Header from "@/components/Header";
 import { Editor } from "@/components/DynamicEditor";
 import { CoverImageModal } from "@/components/modals/CoverImageModal";
 import NotFound from "./not-found";
+import { useSidebar, SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function DocumentPage() {
+  //侧边栏是否打开
+  const { open, isMobile } = useSidebar();
   const params = useParams();
   const document = useQuery(api.documents.getById, {
     id: params.documentId as Id<"documents">,
@@ -30,7 +33,7 @@ export default function DocumentPage() {
           <Skeleton className="ml-auto h-7 w-7" />
           <Skeleton className="h-7 w-7" />
         </div>
-        <div className="mx-auto mt-8 flex w-full px-[54px] max-w-4xl flex-col gap-y-2">
+        <div className="mx-auto mt-8 flex w-full max-w-4xl flex-col gap-y-2 px-[54px]">
           <Skeleton className="h-20 w-20 rounded-full" />
           <Skeleton className="h-12 w-full" />
           <Skeleton className="h-6 w-72" />
@@ -46,7 +49,12 @@ export default function DocumentPage() {
     <>
       {document.isArchived ? (
         <>
-          <Banner document={document} />
+          <div className="sticky top-0 z-[1500] w-full">
+            {(isMobile || !open) && (
+              <SidebarTrigger className="absolute top-1/2 ml-2 -translate-y-1/2" />
+            )}
+            <Banner document={document} />
+          </div>
           <Cover document={document} />
           <div className="mx-auto grid w-full max-w-4xl grid-cols-1 gap-y-2">
             <Header document={document} />
@@ -55,7 +63,10 @@ export default function DocumentPage() {
         </>
       ) : (
         <>
-          <Navbar document={document} />
+          <div className="sticky top-0 z-[1500] flex w-full items-center bg-background">
+            {(isMobile || !open) && <SidebarTrigger className="ml-2" />}
+            <Navbar document={document} />
+          </div>
           <Cover document={document} />
           <div className="mx-auto grid w-full max-w-4xl grid-cols-1 gap-y-2">
             <Toolbar document={document} />

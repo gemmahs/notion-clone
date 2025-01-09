@@ -23,16 +23,15 @@ function Banner({ document }: { document: Doc<"documents"> }) {
   }
   function onRemove() {
     const promise = remove({ id: document._id });
-
+    router.push("/documents"); //必须马上跳转，不然刷新页面的时候重新调用getById函数，然后报错
     toast.promise(promise, {
       loading: "Deleting the note...",
       success: "Note deleted!",
       error: "Failed to delete the  note...",
     });
-    router.push("/documents");
   }
   return (
-    <div className="flex items-center justify-center gap-2 bg-red-500 py-1 text-white">
+    <div className="flex flex-1 items-center justify-center gap-2 bg-red-500 p-2 text-white">
       <span>This page is in the Trash.</span>
       <Button
         size="sm"

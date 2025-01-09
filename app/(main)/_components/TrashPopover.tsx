@@ -77,7 +77,7 @@ function TrashPopover() {
         <PopoverContent
           side={`${isMobile ? "top" : "right"}`}
           align="start"
-          className="text-muted-foreground"
+          className="z-[3000] text-muted-foreground"
         >
           <div className="flex items-center gap-2">
             <Search />
