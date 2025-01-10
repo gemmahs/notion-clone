@@ -13,7 +13,7 @@ export default function Header({ document }: { document: Doc<"documents"> }) {
         )}
         <div className="h-7"></div>
 
-        <div className="mb-10 whitespace-pre-wrap break-words text-5xl font-semibold">
+        <div className="mb-10 whitespace-pre-wrap break-words text-4xl font-semibold sm:text-5xl">
           {document.title}
         </div>
       </div>

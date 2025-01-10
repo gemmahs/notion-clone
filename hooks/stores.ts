@@ -31,3 +31,19 @@ export const useCoverImage = create<coverImageStore>((set, get) => ({
     set({ isOpen: false });
   },
 }));
+
+//管理emoji picker的打开与关闭
+type emojiPickerStore = {
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+};
+export const useEmojiPopover = create<emojiPickerStore>((set, get) => ({
+  isOpen: false,
+  onOpen: () => {
+    set({ isOpen: true });
+  },
+  onClose: () => {
+    set({ isOpen: false });
+  },
+}));

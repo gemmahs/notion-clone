@@ -1,4 +1,5 @@
 "use client";
+
 import { File, Search } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -16,14 +17,12 @@ import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import { useUser } from "@clerk/nextjs";
 import { useSearch } from "@/hooks/stores";
+import { Doc } from "@/convex/_generated/dataModel";
 
 export default function SearchModal() {
   //尽管没必要，但这里试着用zustand来管理状态
-  const { user } = useUser();
   // const [open, setOpen] = useState(false);
-  const isOpen = useSearch((store) => store.isOpen);
   const openSearch = useSearch((store) => store.openSearch);
-  const closeSearch = useSearch((store) => store.closeSearch);
   const toggleSearch = useSearch((store) => store.toggleSearch);
 
   useEffect(() => {
@@ -38,14 +37,7 @@ export default function SearchModal() {
     return () => document.removeEventListener("keydown", down);
   }, []);
 
-  const router = useRouter();
-  function onSelect(documentId: string) {
-    router.push(`/documents/${documentId}`);
-    closeSearch();
-  }
-
   const searchList = useQuery(api.documents.getSearchList);
-  if (searchList == undefined) return <span>Loading</span>;
 
   return (
     <>
@@ -56,39 +48,53 @@ export default function SearchModal() {
           <kbd>&#8984;</kbd>+<kbd>K</kbd>
         </span>
       </SidebarMenuButton>
+      <SearchPanel searchList={searchList} />
+    </>
+  );
+}
 
-      <CommandDialog open={isOpen} onOpenChange={closeSearch}>
-        <CommandInput placeholder={`Search ${user?.firstName}'s Jotion...`} />
-        <CommandList>
-          <CommandGroup heading="Documents">
-            {searchList === undefined &&
-              [1, 2, 3].map((n) => (
-                <CommandItem key={n} disabled>
-                  <Skeleton className="h-8 w-full" />
-                </CommandItem>
-              ))}
+function SearchPanel({ searchList }: { searchList?: Doc<"documents">[] }) {
+  const { user } = useUser();
+  const isOpen = useSearch((store) => store.isOpen);
+  const closeSearch = useSearch((store) => store.closeSearch);
+  const router = useRouter();
+  function onSelect(documentId: string) {
+    router.push(`/documents/${documentId}`);
+    closeSearch();
+  }
 
-            {searchList?.map((doc) => (
-              <CommandItem
-                key={doc._id}
-                value={`${doc._id}-${doc.title}`}
-                title={doc.title}
-                onSelect={() => onSelect(doc._id)}
-              >
-                {doc.icon ? (
-                  <span>{doc.icon}</span>
-                ) : (
-                  <div className="flex items-center justify-center">
-                    <File size={16} />
-                  </div>
-                )}
-                <span>{doc.title}</span>
+  return (
+    <CommandDialog open={isOpen} onOpenChange={closeSearch}>
+      <CommandInput placeholder={`Search ${user?.firstName}'s Jotion...`} />
+      <CommandList>
+        <CommandGroup heading="Documents">
+          {searchList === undefined &&
+            Array(3).fill(0).map((n) => (
+              <CommandItem key={n} disabled>
+                <Skeleton className="h-8 w-full" />
               </CommandItem>
             ))}
-          </CommandGroup>
-          <CommandEmpty>No results found.</CommandEmpty>
-        </CommandList>
-      </CommandDialog>
-    </>
+
+          {searchList?.map((doc) => (
+            <CommandItem
+              key={doc._id}
+              value={`${doc._id}-${doc.title}`}
+              title={doc.title}
+              onSelect={() => onSelect(doc._id)}
+            >
+              {doc.icon ? (
+                <span>{doc.icon}</span>
+              ) : (
+                <div className="flex items-center justify-center">
+                  <File size={16} />
+                </div>
+              )}
+              <span>{doc.title}</span>
+            </CommandItem>
+          ))}
+        </CommandGroup>
+        <CommandEmpty>No results found.</CommandEmpty>
+      </CommandList>
+    </CommandDialog>
   );
 }

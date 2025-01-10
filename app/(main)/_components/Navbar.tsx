@@ -3,14 +3,12 @@
 import { Doc } from "@/convex/_generated/dataModel";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { useUser } from "@clerk/nextjs";
 import { MoreHorizontal, Trash } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Title from "./Title";
@@ -19,7 +17,6 @@ import PublishPopover from "./PublishPopover";
 
 function Navbar({ document }: { document: Doc<"documents"> }) {
   const archive = useMutation(api.documents.archive);
-  const { user } = useUser();
 
   //软删除
   function handleDelete() {
@@ -53,12 +50,6 @@ function Navbar({ document }: { document: Doc<"documents"> }) {
                 Delete
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            {/* <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <div className="px-1 text-sm text-muted-foreground">
-                {`Last edited by ${user?.fullName}`}
-              </div>
-            </DropdownMenuGroup> */}
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

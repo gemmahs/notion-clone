@@ -11,14 +11,13 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
   SidebarMenuSkeleton,
+  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { toast } from "sonner";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Spinner } from "@/components/ui/spinner";
@@ -29,6 +28,7 @@ type DocumentListProps = {
   parentDocumentId?: Id<"documents">;
 };
 export default function DocumentList({ parentDocumentId }: DocumentListProps) {
+  console.log("DocumentList rendering");
   const documents = useQuery(api.documents.getDocumentList, {
     parentDocument: parentDocumentId,
   });
@@ -70,6 +70,8 @@ function DocumentTree({
   activeId?: Id<"documents">;
   expandedDocs?: Id<"documents">[];
 }) {
+  console.log("DocumentTree rendering...");
+  console.log(`${doc.title}`);
   const [expanded, setExpanded] = useState(expandedDocs?.includes(doc._id));
   const { user } = useUser();
   const router = useRouter();
@@ -84,6 +86,7 @@ function DocumentTree({
   //新建
   const createChildDoc = useMutation(api.documents.create);
   function onCreateChildDoc(event: React.MouseEvent) {
+    console.log("create function called.");
     event.stopPropagation();
     if (!doc._id) return;
     const promise = createChildDoc({
@@ -104,13 +107,15 @@ function DocumentTree({
   //删除
   const archive = useMutation(api.documents.archive);
   function onArchive(event: React.MouseEvent) {
+    console.log("Archive function called.");
     event.stopPropagation();
     if (!doc._id) return;
     const promise = archive({
       id: doc._id,
-    }).then(() => {
-      setExpanded(true);
     });
+    // .then(() => {
+    //   setExpanded(true);
+    // });
 
     toast.promise(promise, {
       loading: "Deleting notes...",
@@ -118,7 +123,7 @@ function DocumentTree({
       error: "Failed to delete the note...",
     });
   }
-
+  if (childDocuments) console.log(childDocuments.map((doc) => doc.title));
   if (childDocuments === undefined)
     return (
       <SidebarMenuItem>
@@ -194,21 +199,23 @@ function DocumentTree({
 
         {expanded && (
           <SidebarMenuSub>
-            {childDocuments.length > 0 &&
-              childDocuments.map((childDocument) => (
-                <DocumentTree
-                  key={childDocument._id}
-                  doc={childDocument}
-                  activeId={activeId}
-                  expandedDocs={expandedDocs}
-                />
-              ))}
+            <SidebarMenuSubItem className="hidden pl-3 text-muted-foreground/50 last:block">
+              No page inside
+            </SidebarMenuSubItem>
+            {childDocuments.map((childDocument) => (
+              <DocumentTree
+                key={childDocument._id}
+                doc={childDocument}
+                activeId={activeId}
+                expandedDocs={expandedDocs}
+              />
+            ))}
 
-            {childDocuments.length === 0 && (
+            {/* {childDocuments.length === 0 && (
               <div className="pl-3 text-muted-foreground/50">
                 No page inside
               </div>
-            )}
+            )} */}
           </SidebarMenuSub>
         )}
       </SidebarMenuItem>

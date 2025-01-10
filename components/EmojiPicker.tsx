@@ -5,10 +5,11 @@ import Picker from "@emoji-mart/react";
 import {
   Popover,
   PopoverContent,
-  PopoverTrigger,
+  PopoverAnchor,
 } from "@/components/ui/popover";
 import { useTheme } from "next-themes";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useEmojiPopover } from "@/hooks/stores";
 
 type EmojiPickerProps = {
   onChange: (icon: IconProps) => void;
@@ -25,15 +26,15 @@ export type IconProps = {
 export default function EmojiPicker({ onChange, children }: EmojiPickerProps) {
   const isMobile = useIsMobile({ breakpoint: 576 });
   const { resolvedTheme } = useTheme();
+  const emojiPopover = useEmojiPopover();
 
   return (
-    <Popover>
-      <PopoverTrigger asChild>{children}</PopoverTrigger>
+    <Popover open={emojiPopover.isOpen} onOpenChange={emojiPopover.onClose}>
+      {/* Anchor仅用来定位Content，不控制开关 */}
+      <PopoverAnchor>{children}</PopoverAnchor>
       <PopoverContent
-        side="right"
-        sideOffset={isMobile ? -118 : 4}
-        // align="center" //center is default value
-        // alignOffset={200} 这行根本不起作用，不懂
+        side={isMobile ? "bottom" : "right"}
+        sideOffset={isMobile ? -28 : 4}
         className="w-auto border-0 p-0"
       >
         <Picker

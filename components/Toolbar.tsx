@@ -4,7 +4,7 @@ import { Doc } from "@/convex/_generated/dataModel";
 import { api } from "@/convex/_generated/api";
 import { useMutation } from "convex/react";
 import { Smile, Image, X } from "lucide-react";
-import { useCoverImage } from "@/hooks/stores";
+import { useCoverImage, useEmojiPopover } from "@/hooks/stores";
 import { useRef, useState } from "react";
 import EmojiPicker, { IconProps } from "./EmojiPicker";
 import TextareaAutosize from "react-textarea-autosize";
@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 
 function Toolbar({ document }: { document: Doc<"documents"> }) {
   const coverImage = useCoverImage();
+  const emojiPopover = useEmojiPopover();
   const [isEditing, setIsEditing] = useState(false);
   const [title, setTitle] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -65,6 +66,7 @@ function Toolbar({ document }: { document: Doc<"documents"> }) {
   //上传emoji或者更改emoji
   function handleUpdateIcon(icon: IconProps) {
     update({ id: document._id, icon: icon.native });
+    emojiPopover.onClose();
   }
 
   //删除emoji
@@ -75,6 +77,7 @@ function Toolbar({ document }: { document: Doc<"documents"> }) {
 
   //如果已经有emoji，那么不显示 Add emoji，显示 change emoji
   //如果已经有cover image，那么不显示 Add cover
+  //添加或修改emoji后，希望emoji picker能自动关闭
   return (
     <div className="px-[54px] pt-2">
       {document.icon && (
@@ -101,7 +104,7 @@ function Toolbar({ document }: { document: Doc<"documents"> }) {
             onChange={handleChange}
             onKeyDown={handlePressEnter}
             placeholder="Untitled"
-            className="mb-[27px] max-w-full resize-none overflow-y-hidden text-5xl font-semibold placeholder:text-muted focus-visible:outline-0"
+            className="mb-[27px] max-w-full resize-none overflow-y-hidden bg-background text-5xl font-semibold placeholder:text-muted focus-visible:outline-0"
           />
         ) : (
           <div
@@ -118,6 +121,7 @@ function Toolbar({ document }: { document: Doc<"documents"> }) {
               variant="outline"
               size="sm"
               className="h-7 border-0 p-1 text-sm font-normal text-muted-foreground shadow-none hover:bg-accent hover:text-muted-foreground"
+              onClick={emojiPopover.onOpen}
             >
               <Smile size={16} />
               {document.icon ? (

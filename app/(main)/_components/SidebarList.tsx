@@ -10,17 +10,22 @@ import {
 } from "@/components/ui/sidebar";
 import { api } from "@/convex/_generated/api";
 import { useMutation } from "convex/react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import DocumentList from "./DocumentList";
 import TrashPopover from "./TrashPopover";
 import SearchModal from "./SearchModal";
 import SettingsModal from "./SettingsModal";
+import DocumentList2 from "./DocumentList2";
 
 export default function SidebarList() {
+  const router = useRouter();
   const create = useMutation(api.documents.create);
 
   function onCreate() {
-    const promise = create({ title: "Untitled" });
+    const promise = create({ title: "Untitled" }).then((id) =>
+      router.push(`/documents/${id}`),
+    );
     toast.promise(promise, {
       loading: "Creating a new note...",
       success: "New note created!",
@@ -54,7 +59,8 @@ export default function SidebarList() {
       <SidebarGroup>
         <SidebarGroupContent>
           <SidebarMenu>
-            <DocumentList />
+            <DocumentList2 />
+            {/* <DocumentList /> */}
           </SidebarMenu>
         </SidebarGroupContent>
       </SidebarGroup>

@@ -53,6 +53,7 @@ export default function Editor({
         editor={editor}
         editable={false}
         theme={resolvedTheme === "light" ? "light" : "dark"}
+        sideMenu={false}
         data-theming-css-demo
         data-changing-font-demo
         className="min-h-[170px]"

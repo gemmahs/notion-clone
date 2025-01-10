@@ -1,6 +1,11 @@
 "use client";
-import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
-import { useRouter } from "next/navigation";
+
+import {
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSkeleton,
+} from "@/components/ui/sidebar";
+import { useRouter, useParams } from "next/navigation";
 import {
   Popover,
   PopoverContent,
@@ -13,11 +18,11 @@ import { Id } from "@/convex/_generated/dataModel";
 import { useQuery, useMutation } from "convex/react";
 import { toast } from "sonner";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Spinner } from "@/components/ui/spinner";
 import { ConfirmModal } from "@/components/modals/ConfirmModal";
 import { useState } from "react";
 
 function TrashPopover() {
+  const { documentId: activeId } = useParams();
   const [searchInput, setSearchInput] = useState("");
   const isMobile = useIsMobile({ breakpoint: 576 });
   const router = useRouter();
@@ -42,6 +47,9 @@ function TrashPopover() {
 
   function onRemove(id: Id<"documents">) {
     const promise = remove({ id });
+    if (id === activeId) {
+      router.replace("/documents");
+    }
     toast.promise(promise, {
       loading: "Deleting the note...",
       success: "Note deleted!",
@@ -60,9 +68,9 @@ function TrashPopover() {
 
   if (trashDocs === undefined)
     return (
-      <div className="flex justify-center">
-        <Spinner size="lg" />
-      </div>
+      <SidebarMenuItem>
+        <SidebarMenuSkeleton />
+      </SidebarMenuItem>
     );
   return (
     <SidebarMenuItem>

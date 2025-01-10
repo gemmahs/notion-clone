@@ -8,8 +8,14 @@ import { useMutation } from "convex/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-function Banner({ document }: { document: Doc<"documents"> }) {
-  const router = useRouter();
+function Banner({
+  document,
+  router,
+}: {
+  document: Doc<"documents">;
+  router: ReturnType<typeof useRouter>;
+}) {
+  // const router = useRouter();
   const restore = useMutation(api.documents.restore);
   const remove = useMutation(api.documents.remove);
 
@@ -23,7 +29,7 @@ function Banner({ document }: { document: Doc<"documents"> }) {
   }
   function onRemove() {
     const promise = remove({ id: document._id });
-    router.push("/documents"); //必须马上跳转，不然刷新页面的时候重新调用getById函数，然后报错
+    router.replace("/documents"); //即便马上跳转，但还是会偶发性地报错(getById错误)，不知道为什么
     toast.promise(promise, {
       loading: "Deleting the note...",
       success: "Note deleted!",
@@ -31,25 +37,27 @@ function Banner({ document }: { document: Doc<"documents"> }) {
     });
   }
   return (
-    <div className="flex flex-1 items-center justify-center gap-2 bg-red-500 p-2 text-white">
-      <span>This page is in the Trash.</span>
-      <Button
-        size="sm"
-        variant="outline"
-        className="border-white bg-transparent hover:bg-white hover:text-red-500"
-        onClick={onRestore}
-      >
-        Restore
-      </Button>
-      <ConfirmModal onConfirm={onRemove}>
+    <div className="flex flex-wrap items-center justify-center gap-1 bg-red-500 px-9 py-[6px] text-white">
+      <span>This page is in the Trash</span>
+      <div className="flex gap-x-2">
         <Button
           size="sm"
           variant="outline"
           className="border-white bg-transparent hover:bg-white hover:text-red-500"
+          onClick={onRestore}
         >
-          Delete forever
+          Restore
         </Button>
-      </ConfirmModal>
+        <ConfirmModal onConfirm={onRemove}>
+          <Button
+            size="sm"
+            variant="outline"
+            className="border-white bg-transparent hover:bg-white hover:text-red-500"
+          >
+            Delete forever
+          </Button>
+        </ConfirmModal>
+      </div>
     </div>
   );
 }

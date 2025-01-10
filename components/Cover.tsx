@@ -41,7 +41,7 @@ function Cover({
         priority
         className="object-cover"
       />
-      {!preview && (
+      {!preview && !document.isArchived && (
         <div className="absolute bottom-2 right-2 z-10 flex gap-x-2 opacity-0 transition-opacity group-hover/cover:opacity-100">
           <Button
             variant="outline"

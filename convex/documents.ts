@@ -48,10 +48,9 @@ export const getAllParentDocs = query({
     if (!identity) throw new ConvexError("Not authenticated");
     const userId = identity.subject;
 
-    if (!args.id) return [];
+    if (!args.id) return []; //如果用户的网址是 /documents
     const existingDoc = await ctx.db.get(args.id);
-    // if (!existingDoc) throw new ConvexError("Not found");
-    if (!existingDoc) return [];
+    if (!existingDoc) return []; //不抛错的目的是既然身份验证已通过，那么用户就有资格看到整个文件列表。至于具体的文件，不论是否authorized都看不到
     if (existingDoc.userId !== userId) throw new ConvexError("Unauthorized");
 
     const parentDocs = [];

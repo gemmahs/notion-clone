@@ -51,7 +51,7 @@ export default function PublishPopover({
   async function onCopy() {
     await navigator.clipboard.writeText(url);
     setCopied(true);
-    setTimeout(() => setCopied(false), 5000);
+    setTimeout(() => setCopied(false), 2000);
   }
 
   return (

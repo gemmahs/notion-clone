@@ -3,7 +3,7 @@
 import { Id } from "@/convex/_generated/dataModel";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import Banner from "@/app/(main)/_components/Banner";
 import Cover from "@/components/Cover";
@@ -16,11 +16,13 @@ import NotFound from "./not-found";
 import { useSidebar, SidebarTrigger } from "@/components/ui/sidebar";
 
 export default function DocumentPage() {
+  const router = useRouter();//主要是为了避免删除文件后，route改变不及时导致再次调用getById获取被删除Id
   //侧边栏是否打开
   const { open, isMobile } = useSidebar();
-  const params = useParams();
+  // const params = useParams();
+  const { documentId } = useParams();
   const document = useQuery(api.documents.getById, {
-    id: params.documentId as Id<"documents">,
+    id: documentId as Id<"documents">,
   });
   // const document = null;
 
@@ -28,10 +30,10 @@ export default function DocumentPage() {
   if (document === undefined) {
     return (
       <>
-        <div className="flex items-center gap-x-2 p-2 pl-9">
-          <Skeleton className="h-7 w-56" />
-          <Skeleton className="ml-auto h-7 w-7" />
-          <Skeleton className="h-7 w-7" />
+        <div className="flex h-9 items-center gap-x-2 p-2 pl-9">
+          <Skeleton className="h-5 w-56" />
+          <Skeleton className="ml-auto h-5 w-7" />
+          <Skeleton className="h-5 w-7" />
         </div>
         <div className="mx-auto mt-8 flex w-full max-w-4xl flex-col gap-y-2 px-[54px]">
           <Skeleton className="h-20 w-20 rounded-full" />
@@ -51,9 +53,9 @@ export default function DocumentPage() {
         <>
           <div className="sticky top-0 z-[1500] w-full">
             {(isMobile || !open) && (
-              <SidebarTrigger className="absolute top-1/2 ml-2 -translate-y-1/2" />
+              <SidebarTrigger className="absolute top-2 ml-2" />
             )}
-            <Banner document={document} />
+            <Banner document={document} router={router} />
           </div>
           <Cover document={document} />
           <div className="mx-auto grid w-full max-w-4xl grid-cols-1 gap-y-2">
@@ -63,7 +65,7 @@ export default function DocumentPage() {
         </>
       ) : (
         <>
-          <div className="sticky top-0 z-[1500] flex w-full items-center bg-background">
+          <div className="sticky top-0 z-[1500] flex w-full items-center bg-background/90">
             {(isMobile || !open) && <SidebarTrigger className="ml-2" />}
             <Navbar document={document} />
           </div>
