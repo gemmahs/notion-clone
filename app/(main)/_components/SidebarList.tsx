@@ -12,11 +12,10 @@ import { api } from "@/convex/_generated/api";
 import { useMutation } from "convex/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import DocumentList from "./DocumentList";
 import TrashPopover from "./TrashPopover";
 import SearchModal from "./SearchModal";
 import SettingsModal from "./SettingsModal";
-import DocumentList2 from "./DocumentList2";
+import DocumentList from "./DocumentList";
 
 export default function SidebarList() {
   const router = useRouter();
@@ -59,8 +58,7 @@ export default function SidebarList() {
       <SidebarGroup>
         <SidebarGroupContent>
           <SidebarMenu>
-            <DocumentList2 />
-            {/* <DocumentList /> */}
+            <DocumentList />
           </SidebarMenu>
         </SidebarGroupContent>
       </SidebarGroup>

@@ -4,12 +4,7 @@ import { Poppins } from "next/font/google";
 import { ModeToggle } from "@/components/ToggleTheme";
 import { SignInButton, UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
-import {
-  useConvexAuth,
-  Authenticated,
-  Unauthenticated,
-  AuthLoading,
-} from "convex/react";
+import { Authenticated, Unauthenticated, AuthLoading } from "convex/react";
 import { Spinner } from "@/components/ui/spinner";
 import Link from "next/link";
 

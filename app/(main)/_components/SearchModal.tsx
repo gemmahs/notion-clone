@@ -22,7 +22,7 @@ import { Doc } from "@/convex/_generated/dataModel";
 export default function SearchModal() {
   //尽管没必要，但这里试着用zustand来管理状态
   // const [open, setOpen] = useState(false);
-  const openSearch = useSearch((store) => store.openSearch);
+  // const openSearch = useSearch((store) => store.openSearch);
   const toggleSearch = useSearch((store) => store.toggleSearch);
 
   useEffect(() => {
