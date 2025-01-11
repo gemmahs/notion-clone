@@ -65,7 +65,9 @@ function SearchPanel({ searchList }: { searchList?: Doc<"documents">[] }) {
 
   return (
     <CommandDialog open={isOpen} onOpenChange={closeSearch}>
-      <CommandInput placeholder={`Search ${user?.firstName}'s Jotion...`} />
+      {/* 一直报错Type '{ placeholder: string; }' is not assignable to type 'IntrinsicAttributes & RefAttributes<unknown>'，烦了先删了 */}
+      {/* <CommandInput placeholder={`Search ${user?.firstName}'s Jotion...`} /> */}
+      <CommandInput />
       <CommandList>
         <CommandGroup heading="Documents">
           {searchList === undefined &&
