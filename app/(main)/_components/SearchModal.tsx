@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import { SidebarMenuButton } from "@/components/ui/sidebar";
 import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
-// import { useUser } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
 import { useSearch } from "@/hooks/stores";
 import { Doc } from "@/convex/_generated/dataModel";
 
@@ -54,7 +54,7 @@ export default function SearchModal() {
 }
 
 function SearchPanel({ searchList }: { searchList?: Doc<"documents">[] }) {
-  // const { user } = useUser();
+  const { user } = useUser();
   const isOpen = useSearch((store) => store.isOpen);
   const closeSearch = useSearch((store) => store.closeSearch);
   const router = useRouter();
@@ -66,8 +66,7 @@ function SearchPanel({ searchList }: { searchList?: Doc<"documents">[] }) {
   return (
     <CommandDialog open={isOpen} onOpenChange={closeSearch}>
       {/* 一直报错Type '{ placeholder: string; }' is not assignable to type 'IntrinsicAttributes & RefAttributes<unknown>'，烦了先删了 */}
-      {/* <CommandInput placeholder={`Search ${user?.firstName}'s Jotion...`} /> */}
-      <CommandInput />
+      <CommandInput placeholder={`Search ${user?.firstName}'s Jotion...`} />
       <CommandList>
         <CommandGroup heading="Documents">
           {searchList === undefined &&
