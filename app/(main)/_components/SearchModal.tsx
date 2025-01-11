@@ -69,11 +69,13 @@ function SearchPanel({ searchList }: { searchList?: Doc<"documents">[] }) {
       <CommandList>
         <CommandGroup heading="Documents">
           {searchList === undefined &&
-            Array(3).fill(0).map((n) => (
-              <CommandItem key={n} disabled>
-                <Skeleton className="h-8 w-full" />
-              </CommandItem>
-            ))}
+            Array(3)
+              .fill(0)
+              .map((n) => (
+                <CommandItem key={n} disabled>
+                  <Skeleton className="h-8 w-full" />
+                </CommandItem>
+              ))}
 
           {searchList?.map((doc) => (
             <CommandItem
