@@ -5,12 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
-import {
-  useConvexAuth,
-  Authenticated,
-  Unauthenticated,
-  AuthLoading,
-} from "convex/react";
+import { Authenticated, Unauthenticated, AuthLoading } from "convex/react";
 import { Spinner } from "@/components/ui/spinner";
 
 const poppins = Poppins({
