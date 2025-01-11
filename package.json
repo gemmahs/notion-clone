@@ -66,6 +66,9 @@
     },
     "@emoji-mart/react": {
       "react": "$react"
+    },
+    "cmdk": {
+      "react": "$react"
     }
   }
 }
