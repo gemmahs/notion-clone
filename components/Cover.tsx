@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { useCoverImage } from "@/hooks/stores";
 import { useEdgeStore } from "@/lib/edgestore";
 
-function Cover({
+export default function Cover({
   document,
   preview,
 }: {
@@ -67,5 +67,3 @@ function Cover({
     </div>
   );
 }
-
-export default Cover;
