@@ -62,13 +62,15 @@
   },
   "overrides": {
     "@blocknote/mantine": {
-      "react": "$react"
+      "react": "$react",
+      "react-dom": "$react-dom"
     },
     "@emoji-mart/react": {
       "react": "$react"
     },
     "cmdk": {
-      "react": "$react"
+      "react": "$react",
+      "react-dom": "$react-dom"
     }
   }
 }
