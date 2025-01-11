@@ -7,23 +7,6 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { EdgeStoreProvider } from "@/lib/edgestore";
 import { Toaster } from "@/components/ui/sonner";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  fallback: [
-    "-apple-system",
-    "BlinkMacSystemFont",
-    "Helvetica Neue",
-    "Segoe UI",
-    "Hiragino Sans GB",
-    "sans-serif",
-    "Apple Color Emoji",
-    "Segoe UI Emoji",
-    "Segoe UI Symbol",
-    "Noto Color Emoji",
-  ],
-});
-
 export const metadata: Metadata = {
   title: "Notion Clone",
   description: "A connected workspace where better, faster work happens",
@@ -37,7 +20,7 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        <body className={`${geistSans.variable} antialiased`}>
+        <body className="antialiased">
           <ConvexClientProvider>
             <EdgeStoreProvider>
               <ThemeProvider

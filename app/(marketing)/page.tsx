@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Poppins } from "next/font/google";
 import Link from "next/link";
+import { useUser } from "@clerk/nextjs";
 import {
   useConvexAuth,
   Authenticated,
@@ -31,10 +32,12 @@ const poppins = Poppins({
 });
 
 export default function MarketingPage() {
+  const { user } = useUser();
+
   return (
-    <div className="mx-auto min-h-screen max-w-6xl px-8 font-[family-name:var(--font-geist-sans)] sm:px-20">
+    <div className="mx-auto min-h-screen max-w-6xl px-8 sm:px-20">
       <main className="flex flex-col items-center gap-5 pb-4 pt-16 text-center md:pt-24">
-        <h1 className="text-2xl font-bold sm:text-4xl lg:text-5xl">
+        <h1 className="mt-8 text-2xl font-bold sm:text-4xl lg:text-5xl">
           Your ideas, Documents & Plans Unified.
           <br />
           Welcome to <span className="underline decoration-[3px]">Jotion</span>
@@ -56,7 +59,7 @@ export default function MarketingPage() {
           </Unauthenticated>
 
           <Authenticated>
-            <p className="text-lg py-2">Hi, Gemma </p>
+            <p className="py-2 text-lg">Hi, {user?.firstName} </p>
             <Link href="/documents">
               <Button>
                 Enter Jotion <ArrowRight />
