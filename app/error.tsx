@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-export default function PreviewError() {
+export default function Error() {
   // console.error(typeof error);
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center gap-y-4 p-4">

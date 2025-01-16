@@ -25,18 +25,18 @@ import { useCallback, useEffect, useState } from "react";
 //DocumentList应该只在网址里的documentId变化的时候re-render
 //只要点击不同文件，侧边栏都会经历一个空白阶段（也就是skeleton）!--找到原因了，是由于在return里加了条件expandedDocs&&，以至于每次re-render都要从0开始生成DOM
 export default function DocumentList() {
-  console.log("DocumentList rendering...");
+  // console.log("DocumentList rendering...");
   const { documentId: activeId } = useParams();
   //expandedDocs是一个Id列表，只跟网址里的documentId（即activeId）有关系
   const expandedDocs = useQuery(api.documents.getAllParentDocs, {
     id: activeId as Id<"documents">,
   });
-  console.log(expandedDocs);
+  // console.log(expandedDocs);
   const router = useRouter();
   const onRedirect = (documentId: string) => {
     router.push(`/documents/${documentId}`);
   };
-  //以下这句会导致侧边栏反复清零后重新生成，严重影响reconciliation效率
+  //以下这句会导致侧边栏DOM反复清零后重新生成，严重影响reconciliation效率
   // if (expandedDocs === undefined) return "Loading all parent Docs"
   return (
     <>
@@ -52,21 +52,20 @@ export default function DocumentList() {
   );
 }
 
-//必须理解一个DocumentTree对应于同一parentDoc、同一层级的所有文件
+//必须理解一个DocumentTree对应于同一parentDoc（可以是undefined）、同一层级的所有文件
 function DocumentTree({
   parentId,
   activeId,
   expandedDocs,
   onRedirect,
 }: {
-  parentId?: Id<"documents">; //一开始是undefined
+  parentId?: Id<"documents">;
   activeId?: Id<"documents">;
   expandedDocs?: Id<"documents">[];
   onRedirect: (documentId: string) => void;
 }) {
-  console.log("DocumentTree rendering...");
+  // console.log("DocumentTree rendering...");
   //根据上级文件查找直属子文件，这里用不了useCallback
-  //上级文件可以是undefined
   //只要数据库有改动，useQuery按理说会自动调用，导致整个DocumentTree re-render
   const childDocuments = useQuery(api.documents.getDocumentList, {
     parentDocument: parentId,
@@ -79,7 +78,7 @@ function DocumentTree({
   );
   //等待childDocuments加载完成后更新各个document的expanded状态
   useEffect(() => {
-    console.log("childDocuments changed, useEffect() invoked.");
+    // console.log("childDocuments changed, useEffect() invoked.");
     if (childDocuments && expandedDocs && expandedDocs.length > 0) {
       const expandedState = childDocuments.reduce<
         Record<Id<"documents">, boolean>
@@ -88,9 +87,9 @@ function DocumentTree({
         return acc;
       }, {});
       setExpanded(expandedState);
-      console.log(`${childDocuments.map((doc) => doc.title)}`);
+      // console.log(`${childDocuments.map((doc) => doc.title)}`);
     }
-  }, [childDocuments]);
+  }, [childDocuments, expandedDocs]);
 
   const onExpand = useCallback(
     (id: Id<"documents">) =>

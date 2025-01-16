@@ -28,3 +28,11 @@
     "Noto Sans SC", "WenQuanYi Micro Hei", "sans-serif", "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
+
+.bn-container {
+  --editor-padding: 54px;
+}
+
+.bn-editor {
+  padding-inline: var(--editor-padding);
+}

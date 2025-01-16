@@ -6,7 +6,9 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { SingleImageDropzone } from "../SingleImageDropzone";
 import { useState } from "react";
 import { useEdgeStore } from "@/lib/edgestore";
@@ -50,6 +52,9 @@ export function CoverImageModal({ document }: { document: Doc<"documents"> }) {
       <DialogContent className="border-0 outline-none sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-center">Cover image</DialogTitle>
+          <VisuallyHidden.Root>
+            <DialogDescription>Cover Image</DialogDescription>
+          </VisuallyHidden.Root>
         </DialogHeader>
         <SingleImageDropzone
           value={file}

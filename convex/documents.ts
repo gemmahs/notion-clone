@@ -40,7 +40,7 @@ export const removeIcon = mutation({
 //此函数用于优化侧边栏的显示：根据active doc展开其所在的文件列表
 export const getAllParentDocs = query({
   args: {
-    id: v.optional(v.id("documents")),
+    id: v.optional(v.id("documents")), //如果id不匹配会抛出一个ArgumentValidationError
   },
   handler: async (ctx, args) => {
     //验证身份

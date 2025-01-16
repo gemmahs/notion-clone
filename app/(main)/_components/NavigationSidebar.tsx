@@ -41,7 +41,7 @@ export function NavigationSidebar() {
   }, [isResizing]);
 
   return (
-    <Sidebar ref={sidebarRef} className="">
+    <Sidebar ref={sidebarRef}>
       <SidebarHeader>
         <UserNav />
       </SidebarHeader>

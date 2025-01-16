@@ -8,18 +8,12 @@ import { useCreateBlockNote } from "@blocknote/react";
 // import "@blocknote/shadcn/style.css";
 import { BlockNoteView } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css"; //颜色都得改
-import "./styles.css"; //自定义主题色，因为mantine的颜色shadcn不一样
+import "./styles.css"; //自定义主题色，因为mantine的颜色和shadcn不一样
 import { PartialBlock } from "@blocknote/core";
 import { useTheme } from "next-themes";
 import { useEdgeStore } from "@/lib/edgestore";
 
-export default function Editor({
-  document,
-  preview,
-}: {
-  document: Doc<"documents">;
-  preview?: boolean;
-}) {
+export default function Editor({ document }: { document: Doc<"documents"> }) {
   const { resolvedTheme } = useTheme();
 
   const { edgestore } = useEdgeStore();
@@ -46,19 +40,6 @@ export default function Editor({
         ],
     uploadFile: handleUpload, //图片尺寸调节不了，很奇怪
   });
-
-  if (preview)
-    return (
-      <BlockNoteView
-        editor={editor}
-        editable={false}
-        theme={resolvedTheme === "light" ? "light" : "dark"}
-        sideMenu={false}
-        data-theming-css-demo
-        data-changing-font-demo
-        className="min-h-[170px]"
-      />
-    );
 
   return (
     <BlockNoteView
