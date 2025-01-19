@@ -1,18 +1,25 @@
-"use client";
+// "use client";
 
 import Header from "@/components/Header";
 import { Id } from "@/convex/_generated/dataModel";
 import { api } from "@/convex/_generated/api";
-import { useQuery } from "convex/react";
-import { useParams } from "next/navigation";
+// import { useQuery } from "convex/react";
+import { fetchQuery } from "convex/nextjs";
+// import { useParams } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
-import Cover from "@/components/Cover";
+// import Cover from "@/components/Cover";
 import PreviewEditor from "@/components/PreviewEditor";
+import Image from "next/image";
 
-export default function PreviewPage() {
-  const params = useParams();
-  const document = useQuery(api.documents.getForPreview, {
-    id: params.documentId as Id<"documents">,
+export default async function PreviewPage({
+  params,
+}: {
+  params: Promise<{ documentId: string }>;
+}) {
+  // const params = useParams();
+  const documentId = (await params).documentId;
+  const document = await fetchQuery(api.documents.getForPreview, {
+    id: documentId as Id<"documents">,
   });
 
   if (document === undefined) {
@@ -36,7 +43,21 @@ export default function PreviewPage() {
 
   return (
     <>
-      <Cover document={document} preview />
+      {/* <Cover document={document} preview /> */}
+      {document.coverImage ? (
+        <div className="relative h-[30svh] w-full">
+          <Image
+            src={document.coverImage}
+            alt="Cover Image"
+            fill
+            priority
+            className="object-cover"
+          />
+        </div>
+      ) : (
+        <div className="h-16 bg-transparent"></div>
+      )}
+
       {/* Toolbar加上preview后的逻辑太复杂，不如重写一个组件Header */}
       <div className="mx-auto grid w-full max-w-[800px] grid-cols-1 gap-y-2">
         <div className="px-[25px] pt-2">
